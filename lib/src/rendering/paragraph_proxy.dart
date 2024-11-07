@@ -20,7 +20,7 @@ class RenderParagraphProxy extends RenderProxyBox
             text: TextSpan(text: ' ', style: textStyle),
             textAlign: textAlign,
             textDirection: textDirection,
-            textScaleFactor: textScaleFactor,
+            textScaler: TextScaler.linear(textScaleFactor),
             strutStyle: strutStyle,
             locale: locale,
             textWidthBasis: textWidthBasis,
@@ -48,8 +48,8 @@ class RenderParagraphProxy extends RenderProxyBox
   }
 
   set textScaleFactor(double value) {
-    if (_prototypePainter.textScaleFactor == value) return;
-    _prototypePainter.textScaleFactor = value;
+    if (_prototypePainter.textScaler == TextScaler.linear(value)) return;
+    _prototypePainter.textScaler = TextScaler.linear(value);
     markNeedsLayout();
   }
 

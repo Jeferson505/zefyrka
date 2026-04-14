@@ -1,3 +1,15 @@
+## 1.7.0
+
+* migrated from deprecated RawKeyEvent to KeyEvent API (Flutter 3.18+)
+* updated keyboard listener to use HardwareKeyboard.instance
+* fixed platform detection for macOS key modifiers
+* resolved 14 deprecation warnings
+* improved cursor styling with dynamic theme colors
+* fixed CursorStyle equality and hashing implementation
+* enhanced code quality with stricter linting rules
+* improved documentation for unimplemented features
+* removed unused gesture recognizer code
+
 ## 1.6.0
 
 * aligned with Flutter 3.19 release

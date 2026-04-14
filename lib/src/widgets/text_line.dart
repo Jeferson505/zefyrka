@@ -48,7 +48,7 @@ class TextLine extends StatelessWidget {
         textAlign: textAlign,
         textDirection: textDirection,
         strutStyle: strutStyle,
-        textScaleFactor: MediaQuery.textScaleFactorOf(context),
+        textScaler: MediaQuery.textScalerOf(context),
       ),
     );
   }

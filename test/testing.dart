@@ -39,7 +39,8 @@ class EditorSandBox {
     return EditorSandBox._(tester, focusNode, document, controller, widget);
   }
 
-  EditorSandBox._(this.tester, this.focusNode, this.document, this.controller, this.widget);
+  EditorSandBox._(
+      this.tester, this.focusNode, this.document, this.controller, this.widget);
 
   TextSelection get selection => controller.selection;
 
@@ -56,8 +57,7 @@ class EditorSandBox {
   }
 
   Future<void> disable() {
-    final state = tester.state(find.byType(_ZefyrSandbox)) as _ZefyrSandboxState;
-    state.disable();
+    (tester.state(find.byType(_ZefyrSandbox)) as _ZefyrSandboxState).disable();
     return tester.pumpAndSettle();
   }
 
@@ -91,12 +91,14 @@ class EditorSandBox {
   }
 
   RawMaterialButton findButtonWithIcon(IconData icon) {
-    final button = tester.widget(find.widgetWithIcon(RawMaterialButton, icon)) as RawMaterialButton;
+    final button = tester.widget(find.widgetWithIcon(RawMaterialButton, icon))
+        as RawMaterialButton;
     return button;
   }
 
   RawMaterialButton findButtonWithText(String text) {
-    final button = tester.widget(find.widgetWithText(RawMaterialButton, text)) as RawMaterialButton;
+    final button = tester.widget(find.widgetWithText(RawMaterialButton, text))
+        as RawMaterialButton;
     return button;
   }
 }

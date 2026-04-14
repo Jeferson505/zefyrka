@@ -121,7 +121,7 @@ class EditableTextBlock extends StatelessWidget {
         index: index,
         count: count,
         style: theme!.code.style
-            .copyWith(color: theme.code.style.color!.withOpacity(0.4)),
+            .copyWith(color: theme.code.style.color!.withValues(alpha: 0.4)),
         width: 32.0,
         padding: 16.0,
         withDot: false,
@@ -241,11 +241,12 @@ class _EditableBlock extends MultiChildRenderObjectWidget {
   @override
   void updateRenderObject(
       BuildContext context, covariant RenderEditableTextBlock renderObject) {
-    renderObject.node = node;
-    renderObject.textDirection = textDirection;
-    renderObject.padding = _padding;
-    renderObject.decoration = decoration;
-    renderObject.contentPadding = _contentPadding;
+    renderObject
+      ..node = node
+      ..textDirection = textDirection
+      ..padding = _padding
+      ..decoration = decoration
+      ..contentPadding = _contentPadding;
   }
 }
 
@@ -356,8 +357,9 @@ class _CheckboxPainter extends CustomPainter {
       final p1 = Offset(padding, size.height * 0.5);
       final p2 = Offset(size.width * 0.4, size.height - padding);
       final p3 = Offset(size.width - padding, padding);
-      canvas.drawLine(p1, p2, _paint);
-      canvas.drawLine(p2, p3, _paint);
+      canvas
+        ..drawLine(p1, p2, _paint)
+        ..drawLine(p2, p3, _paint);
     }
   }
 

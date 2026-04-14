@@ -50,7 +50,7 @@ class ZefyrController extends ChangeNotifier {
   }
 
   /// Replaces [length] characters in the document starting at [index] with
-  /// provided [text].
+  /// provided 'text'.
   ///
   /// Resulting change is registered as produced by user action, e.g.
   /// using [ChangeSource.local].
@@ -153,7 +153,7 @@ class ZefyrController extends ChangeNotifier {
   /// provided [change] and it is caller's responsibility to ensure this change
   /// can be composed without errors.
   ///
-  /// If composing this change fails then this method throws [ComposeError].
+  /// If composing this change fails then this method throws 'ComposeError'.
   void compose(Delta change,
       {TextSelection? selection, ChangeSource source = ChangeSource.remote}) {
     if (change.isNotEmpty) {

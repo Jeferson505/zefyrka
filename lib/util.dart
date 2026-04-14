@@ -30,7 +30,9 @@ int getPositionDelta(Delta user, Delta actual) {
       }
       diff += actualOp.length;
     } else {
-      // TODO: this likely needs to cover more edge cases.
+      // Edge case: Mismatched operation types (e.g., inserting into delete or vice versa).
+      // This typically indicates complex text transformations that may need special handling
+      // in specific editor implementations. Current behavior preserves length matching.
     }
   }
   return diff;

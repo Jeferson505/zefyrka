@@ -4,11 +4,13 @@ import 'package:zefyrka/zefyrka.dart';
 import 'scaffold.dart';
 
 class ScrollableLayout extends StatefulWidget {
+  const ScrollableLayout({super.key});
+
   @override
-  _ScrollableLayoutState createState() => _ScrollableLayoutState();
+  ScrollableLayoutState createState() => ScrollableLayoutState();
 }
 
-class _ScrollableLayoutState extends State<ScrollableLayout> {
+class ScrollableLayoutState extends State<ScrollableLayout> {
   final FocusNode _focusNode = FocusNode();
 
   final _scrollController = ScrollController();

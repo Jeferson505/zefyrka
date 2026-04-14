@@ -6,6 +6,8 @@ import 'package:quill_format/quill_format.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 class EditorPage extends StatefulWidget {
+  const EditorPage({super.key});
+
   @override
   EditorPageState createState() => EditorPageState();
 }
@@ -57,7 +59,7 @@ class EditorPageState extends State<EditorPage> {
   /// Loads the document asynchronously from a file if it exists, otherwise
   /// returns default document.
   Future<NotusDocument> _loadDocument() async {
-    final file = File(Directory.systemTemp.path + '/quick_start.json');
+    final file = File('${Directory.systemTemp.path}/quick_start.json');
     if (await file.exists()) {
       final contents = await file
           .readAsString()
@@ -73,11 +75,14 @@ class EditorPageState extends State<EditorPage> {
     // `jsonEncode` directly:
     final contents = jsonEncode(_controller!.document);
     // For this example we save our document to a temporary file.
-    final file = File(Directory.systemTemp.path + '/quick_start.json');
+    final file = File('${Directory.systemTemp.path}/quick_start.json');
     // And show a snack bar on success.
     file.writeAsString(contents).then((_) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Saved.')));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Saved.')),
+        );
+      }
     });
   }
 }

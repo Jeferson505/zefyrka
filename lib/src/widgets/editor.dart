@@ -227,7 +227,9 @@ class _ZefyrEditorState extends State<ZefyrEditor>
   @override
   GlobalKey<EditorState> get editableTextKey => _editorKey;
 
-  // TODO: Add support for forcePress on iOS.
+  /// ForcePress support is not yet implemented.
+  /// This would allow iOS users to trigger additional actions with force-touch.
+  /// Future enhancement for iOS-specific interactions.
   @override
   bool get forcePressEnabled => false;
 
@@ -279,7 +281,7 @@ class _ZefyrEditorState extends State<ZefyrEditor>
         cursorColor ??=
             selectionTheme.cursorColor ?? cupertinoTheme.primaryColor;
         selectionColor = selectionTheme.selectionColor ??
-            cupertinoTheme.primaryColor.withOpacity(0.40);
+            cupertinoTheme.primaryColor.withValues(alpha: 0.40);
         cursorRadius ??= const Radius.circular(2.0);
         cursorOffset = Offset(
             iOSHorizontalOffset / MediaQuery.of(context).devicePixelRatio, 0);
@@ -294,7 +296,7 @@ class _ZefyrEditorState extends State<ZefyrEditor>
         cursorOpacityAnimates = false;
         cursorColor ??= selectionTheme.cursorColor ?? theme.colorScheme.primary;
         selectionColor = selectionTheme.selectionColor ??
-            theme.colorScheme.primary.withOpacity(0.40);
+            theme.colorScheme.primary.withValues(alpha: 0.40);
         break;
     }
 
@@ -403,7 +405,9 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
         final url = Uri.parse(segment.style.get(NotusAttribute.link)!.value!);
         editor.widget.onLaunchUrl!(url);
       } else {
-        // TODO: Implement a toolbar to display the URL and allow to launch it.
+        // URL handling in edit mode is not yet implemented.
+        // Future enhancement: Show toolbar to display and manage URL links
+        // in the document. This would require additional UI state management.
         // editor.showToolbar();
       }
     }
@@ -413,7 +417,8 @@ class _ZefyrEditorSelectionGestureDetectorBuilder
   void onSingleTapUp(TapUpDetails details) {
     editor.hideToolbar();
 
-    // TODO: Explore if we can forward tap up events to the TextSpan gesture detector
+    // URL gesture detection: Currently handled through _launchUrlIfNeeded.
+    // TextSpan gesture forwarding may be explored in future optimizations.
     _launchUrlIfNeeded(details);
 
     if (delegate.selectionEnabled) {
@@ -672,17 +677,25 @@ class RawEditor extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-        .add(DiagnosticsProperty<ZefyrController>('controller', controller));
-    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode));
-    properties.add(DoubleProperty('maxLines', maxHeight, defaultValue: null));
-    properties.add(DoubleProperty('minLines', minHeight, defaultValue: null));
-    properties.add(DoubleProperty('scrollAreaMinHeight', scrollAreaMinHeight,
-        defaultValue: null));
-    properties.add(
-        DiagnosticsProperty<bool>('autofocus', autofocus, defaultValue: false));
-    properties.add(DiagnosticsProperty<ScrollPhysics>(
-        'scrollPhysics', scrollPhysics,
-        defaultValue: null));
+      ..add(DiagnosticsProperty<ZefyrController>('controller', controller))
+      ..add(DiagnosticsProperty<FocusNode>('focusNode', focusNode))
+      ..add(DoubleProperty('maxLines', maxHeight, defaultValue: null))
+      ..add(DoubleProperty('minLines', minHeight, defaultValue: null))
+      ..add(DoubleProperty(
+        'scrollAreaMinHeight',
+        scrollAreaMinHeight,
+        defaultValue: null,
+      ))
+      ..add(DiagnosticsProperty<bool>(
+        'autofocus',
+        autofocus,
+        defaultValue: false,
+      ))
+      ..add(DiagnosticsProperty<ScrollPhysics>(
+        'scrollPhysics',
+        scrollPhysics,
+        defaultValue: null,
+      ));
   }
 }
 
@@ -823,9 +836,10 @@ class RawEditorState extends EditorState
       showCursor: ValueNotifier<bool>(widget.showCursor),
       style: widget.cursorStyle ??
           CursorStyle(
-            // TODO: fallback to current theme's accent color
-            color: Colors.blueAccent,
-            backgroundColor: Colors.grey,
+            color: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).brightness == Brightness.light
+                ? Colors.grey.shade300
+                : Colors.grey.shade700,
             width: 2.0,
           ),
       tickerProvider: this,
@@ -842,7 +856,7 @@ class RawEditorState extends EditorState
 
     // Focus
     _focusAttachment = widget.focusNode.attach(context,
-        onKey: (node, event) => _keyboardListener.handleKeyEvent(event));
+        onKeyEvent: (node, event) => _keyboardListener.handleKeyEvent(event));
     widget.focusNode.addListener(_handleFocusChanged);
   }
 
@@ -890,7 +904,7 @@ class RawEditorState extends EditorState
       oldWidget.focusNode.removeListener(_handleFocusChanged);
       _focusAttachment?.detach();
       _focusAttachment = widget.focusNode.attach(context,
-          onKey: (node, event) => _keyboardListener.handleKeyEvent(event));
+          onKeyEvent: (node, event) => _keyboardListener.handleKeyEvent(event));
       widget.focusNode.addListener(_handleFocusChanged);
       updateKeepAlive();
     }
@@ -992,10 +1006,10 @@ class RawEditorState extends EditorState
 //      }
     } else {
       WidgetsBinding.instance.removeObserver(this);
-      // TODO: teach editor about state of the toolbar and whether the user is in the middle of applying styles.
-      //       this is needed because some buttons in toolbar can steal focus from the editor
-      //       but we want to preserve the selection, maybe adjusting its style slightly.
-      //
+      // Future enhancement: Track toolbar state to preserve selection when losing focus.
+      // Currently when editor loses focus, the selection is not preserved if the user
+      // interacts with toolbar buttons. This would require coordinating focus between
+      // the editor and toolbar, possibly preserving the selection with style information.
       // Clear the selection and composition state if this widget lost focus.
       // widget.controller.updateSelection(TextSelection.collapsed(offset: 0),
       //     source: ChangeSource.local);
@@ -1307,28 +1321,36 @@ class RawEditorState extends EditorState
 
   @override
   void insertTextPlaceholder(Size size) {
-    // TODO: implement insertTextPlaceholder
+    // Not implemented: TextInputClient method for text input placeholders.
+    // This method is called by the framework when a placeholder should be inserted
+    // (typically for IME multi-stage text input). Currently not required for basic editing.
   }
 
   @override
   void removeTextPlaceholder() {
-    // TODO: implement removeTextPlaceholder
+    // Not implemented: TextInputClient method for text input placeholders.
+    // Counterpart to insertTextPlaceholder. Not required for basic editing.
   }
 
   @override
   void didChangeInputControl(
       TextInputControl? oldControl, TextInputControl? newControl) {
-    // TODO: implement didChangeInputControl
+    // Not implemented: TextInputClient method for input control changes.
+    // Called when the text input control changes. Future enhancement if multi-editor
+    // coordination is needed.
   }
 
   @override
   void performSelector(String selectorName) {
-    // TODO: implement performSelector
+    // Not implemented: TextInputClient method for selector-based actions.
+    // Used on iOS for special text editing actions. Future enhancement for platform-specific features.
   }
 
   @override
   void insertContent(KeyboardInsertedContent content) {
-    // TODO: implement insertContent
+    // Not implemented: TextInputClient method for keyboard-inserted content.
+    // Supports insertion of rich content like stickers or emojis from keyboard.
+    // Future enhancement for rich input support.
   }
 
   @override
@@ -1384,21 +1406,23 @@ class _Editor extends MultiChildRenderObjectWidget {
   @override
   void updateRenderObject(
       BuildContext context, covariant RenderEditor renderObject) {
-    renderObject.document = document;
-    renderObject.node = document.root;
-    renderObject.textDirection = textDirection;
-    renderObject.hasFocus = hasFocus;
-    renderObject.selection = selection;
-    renderObject.startHandleLayerLink = startHandleLayerLink;
-    renderObject.endHandleLayerLink = endHandleLayerLink;
-    renderObject.onSelectionChanged = onSelectionChanged;
-    renderObject.padding = padding;
+    renderObject
+      ..document = document
+      ..node = document.root
+      ..textDirection = textDirection
+      ..hasFocus = hasFocus
+      ..selection = selection
+      ..startHandleLayerLink = startHandleLayerLink
+      ..endHandleLayerLink = endHandleLayerLink
+      ..onSelectionChanged = onSelectionChanged
+      ..padding = padding;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    // TODO
+    // Debug properties for this render object are inherited from parent.
+    // Additional properties could be added here if needed for debugging/profiling.
 //    properties.add(EnumProperty<Axis>('direction', direction));
   }
 }

@@ -4,11 +4,13 @@ import 'package:zefyrka/zefyrka.dart';
 import 'scaffold.dart';
 
 class ReadOnlyView extends StatefulWidget {
+  const ReadOnlyView({super.key});
+
   @override
-  _ReadOnlyViewState createState() => _ReadOnlyViewState();
+  ReadOnlyViewState createState() => ReadOnlyViewState();
 }
 
-class _ReadOnlyViewState extends State<ReadOnlyView> {
+class ReadOnlyViewState extends State<ReadOnlyView> {
   final FocusNode _focusNode = FocusNode();
 
   bool _edit = false;

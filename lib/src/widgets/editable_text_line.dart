@@ -78,15 +78,16 @@ class EditableTextLine extends RenderObjectWidget {
   @override
   void updateRenderObject(
       BuildContext context, covariant RenderEditableTextLine renderObject) {
-    renderObject.node = node;
-    renderObject.padding = _padding;
-    renderObject.textDirection = textDirection;
-    renderObject.cursorController = cursorController;
-    renderObject.selection = selection;
-    renderObject.selectionColor = selectionColor;
-    renderObject.enableInteractiveSelection = enableInteractiveSelection;
-    renderObject.hasFocus = hasFocus;
-    renderObject.devicePixelRatio = devicePixelRatio;
+    renderObject
+      ..node = node
+      ..padding = _padding
+      ..textDirection = textDirection
+      ..cursorController = cursorController
+      ..selection = selection
+      ..selectionColor = selectionColor
+      ..enableInteractiveSelection = enableInteractiveSelection
+      ..hasFocus = hasFocus
+      ..devicePixelRatio = devicePixelRatio;
   }
 }
 

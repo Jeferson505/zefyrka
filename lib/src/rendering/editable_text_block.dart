@@ -1,5 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:notus_format/notus_format.dart';
+import 'package:zefyrka/src/rendering/editor.dart' show RenderEditor;
+import 'package:zefyrka/zefyrka.dart' show RenderEditor;
 
 import '../widgets/selection_utils.dart';
 import 'editable_box.dart';

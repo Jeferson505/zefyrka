@@ -4,11 +4,13 @@ import 'package:zefyrka/zefyrka.dart';
 import 'scaffold.dart';
 
 class ExpandedLayout extends StatefulWidget {
+  const ExpandedLayout({super.key});
+
   @override
-  _ExpandedLayoutState createState() => _ExpandedLayoutState();
+  ExpandedLayoutState createState() => ExpandedLayoutState();
 }
 
-class _ExpandedLayoutState extends State<ExpandedLayout> {
+class ExpandedLayoutState extends State<ExpandedLayout> {
   final FocusNode _focusNode = FocusNode();
 
   bool _expands = true;

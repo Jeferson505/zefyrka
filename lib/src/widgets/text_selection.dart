@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:flutter/cupertino.dart' show CupertinoTextField;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ typedef DragSelectionUpdateCallback = void Function(
 const Duration _kDragSelectionUpdateThrottle = Duration(milliseconds: 50);
 
 /// The text position that a give selection handle manipulates. Dragging the
-/// [start] handle always moves the [start]/[baseOffset] of the selection.
+/// [start] handle always moves the [start] of the selection.
 enum _TextSelectionHandlePosition { start, end }
 
 /// An object that manages a pair of text selection handles.
@@ -370,11 +371,12 @@ class EditorTextSelectionOverlay {
         textPosition = newSelection.extent;
         break;
     }
-    selectionDelegate.userUpdateTextEditingValue(
-      _value.copyWith(selection: newSelection, composing: TextRange.empty),
-      SelectionChangedCause.drag,
-    );
-    selectionDelegate.bringIntoView(textPosition);
+    selectionDelegate
+      ..userUpdateTextEditingValue(
+        _value.copyWith(selection: newSelection, composing: TextRange.empty),
+        SelectionChangedCause.drag,
+      )
+      ..bringIntoView(textPosition);
   }
 }
 
@@ -458,8 +460,7 @@ class _TextSelectionHandleOverlayState
     super.dispose();
   }
 
-  void _handleDragStart(DragStartDetails details) {
-  }
+  void _handleDragStart(DragStartDetails details) {}
 
   void _handleDragUpdate(DragUpdateDetails details) {
     final TextPosition position =
@@ -855,8 +856,9 @@ class EditorTextSelectionGestureDetectorBuilder {
         renderEditor.selectWord(cause: SelectionChangedCause.tap);
       }
       if (shouldShowSelectionToolbar) {
-        editor.hideToolbar();
-        editor.showToolbar();
+        editor
+          ..hideToolbar()
+          ..showToolbar();
       }
     }
   }
@@ -1297,30 +1299,7 @@ class _EditorTextSelectionGestureDetectorState
 }
 
 // A TapGestureRecognizer which allows other GestureRecognizers to win in the
-// GestureArena. This means both _TransparentTapGestureRecognizer and other
-// GestureRecognizers can handle the same event.
-//
-// This enables proper handling of events on both the selection handle and the
-// underlying input, since there is significant overlap between the two given
-// the handle's padded hit area.  For example, the selection handle needs to
-// handle single taps on itself, but double taps need to be handled by the
-// underlying input.
-class _TransparentTapGestureRecognizer extends TapGestureRecognizer {
-  _TransparentTapGestureRecognizer({
-    Object? debugOwner,
-  }) : super(debugOwner: debugOwner);
-
-  @override
-  void rejectGesture(int pointer) {
-    // Accept new gestures that another recognizer has already won.
-    // Specifically, this needs to accept taps on the text selection handle on
-    // behalf of the text field in order to handle double tap to select. It must
-    // not accept other gestures like longpresses and drags that end outside of
-    // the text field.
-    if (state == GestureRecognizerState.ready) {
-      acceptGesture(pointer);
-    } else {
-      super.rejectGesture(pointer);
-    }
-  }
-}
+// Note: The _TransparentTapGestureRecognizer class has been removed as it is
+// no longer used in the codebase. It was previously intended to handle gesture
+// recognition for the text selection handle, but the functionality is now
+// handled elsewhere in the selection logic.

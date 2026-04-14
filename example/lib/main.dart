@@ -7,6 +7,8 @@ void main() {
 }
 
 class ZefyrApp extends StatelessWidget {
+  const ZefyrApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

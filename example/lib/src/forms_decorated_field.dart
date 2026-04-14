@@ -4,11 +4,13 @@ import 'package:zefyrka/zefyrka.dart';
 import 'scaffold.dart';
 
 class DecoratedFieldDemo extends StatefulWidget {
+  const DecoratedFieldDemo({super.key});
+
   @override
-  _DecoratedFieldDemoState createState() => _DecoratedFieldDemoState();
+  DecoratedFieldDemoState createState() => DecoratedFieldDemoState();
 }
 
-class _DecoratedFieldDemoState extends State<DecoratedFieldDemo> {
+class DecoratedFieldDemoState extends State<DecoratedFieldDemo> {
   final FocusNode _focusNode = FocusNode();
 
   @override

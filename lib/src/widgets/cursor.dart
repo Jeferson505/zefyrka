@@ -53,7 +53,7 @@ class CursorStyle {
   /// The offset that is used, in pixels, when painting the cursor on screen.
   ///
   /// By default, the cursor position should be set to an offset of
-  /// (-[cursorWidth] * 0.5, 0.0) on iOS platforms and (0, 0) on Android
+  /// (-'cursorWidth' * 0.5, 0.0) on iOS platforms and (0, 0) on Android
   /// platforms. The origin from where the offset is applied to is the arbitrary
   /// location where the cursor ends up being rendered from by default.
   final Offset? offset;
@@ -83,7 +83,7 @@ class CursorStyle {
   });
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! CursorStyle) return false;
     return other.color == color &&
@@ -97,7 +97,7 @@ class CursorStyle {
   }
 
   @override
-  int get hashCode => hashValues(color, backgroundColor, width, height, radius,
+  int get hashCode => Object.hash(color, backgroundColor, width, height, radius,
       offset, opacityAnimates, paintAboveText);
 }
 
@@ -196,8 +196,9 @@ class CursorController extends ChangeNotifier {
     _cursorBlinkOpacityController.value = 0.0;
 
     if (style.opacityAnimates) {
-      _cursorBlinkOpacityController.stop();
-      _cursorBlinkOpacityController.value = 0.0;
+      _cursorBlinkOpacityController
+        ..stop()
+        ..value = 0.0;
     }
   }
 
@@ -214,7 +215,7 @@ class CursorController extends ChangeNotifier {
 
   void _onCursorColorTick() {
     _cursorColor.value =
-        _style.color.withOpacity(_cursorBlinkOpacityController.value);
+        _style.color.withValues(alpha: _cursorBlinkOpacityController.value);
     cursorBlink.value =
         showCursor.value && _cursorBlinkOpacityController.value > 0;
   }

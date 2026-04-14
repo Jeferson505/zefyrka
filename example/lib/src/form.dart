@@ -3,14 +3,16 @@ import 'package:zefyrka/zefyrka.dart';
 
 import 'full_page.dart';
 
-enum _Options { darkTheme }
+enum Options { darkTheme }
 
 class FormEmbeddedScreen extends StatefulWidget {
+  const FormEmbeddedScreen({super.key});
+
   @override
-  _FormEmbeddedScreenState createState() => _FormEmbeddedScreenState();
+  FormEmbeddedScreenState createState() => FormEmbeddedScreenState();
 }
 
-class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
+class FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
   final ZefyrController _controller = ZefyrController(NotusDocument());
   final FocusNode _focusNode = FocusNode();
 
@@ -37,7 +39,7 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
       appBar: AppBar(
         title: ZefyrLogo(),
         actions: [
-          PopupMenuButton<_Options>(
+          PopupMenuButton<Options>(
             itemBuilder: buildPopupMenu,
             onSelected: handlePopupItemSelected,
           )
@@ -66,21 +68,21 @@ class _FormEmbeddedScreenState extends State<FormEmbeddedScreen> {
     );
   }
 
-  void handlePopupItemSelected(value) {
+  void handlePopupItemSelected(Options value) {
     if (!mounted) return;
     setState(() {
-      if (value == _Options.darkTheme) {
+      if (value == Options.darkTheme) {
         _darkTheme = !_darkTheme;
       }
     });
   }
 
-  List<PopupMenuEntry<_Options>> buildPopupMenu(BuildContext context) {
+  List<PopupMenuEntry<Options>> buildPopupMenu(BuildContext context) {
     return [
       CheckedPopupMenuItem(
-        value: _Options.darkTheme,
-        child: Text('Dark theme'),
+        value: Options.darkTheme,
         checked: _darkTheme,
+        child: Text('Dark theme'),
       ),
     ];
   }

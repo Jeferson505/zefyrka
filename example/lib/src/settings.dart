@@ -55,13 +55,13 @@ Future<Settings?> showSettingsDialog(BuildContext context, Settings? settings) {
 class SettingsDialog extends StatefulWidget {
   final Settings? settings;
 
-  const SettingsDialog({Key? key, required this.settings}) : super(key: key);
+  const SettingsDialog({super.key, required this.settings});
 
   @override
-  _SettingsDialogState createState() => _SettingsDialogState();
+  SettingsDialogState createState() => SettingsDialogState();
 }
 
-class _SettingsDialogState extends State<SettingsDialog> {
+class SettingsDialogState extends State<SettingsDialog> {
   String? _assetsPath = '';
   TextEditingController? _assetsPathController;
 
@@ -111,8 +111,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
 class SettingsProvider extends InheritedWidget {
   final Settings? settings;
 
-  SettingsProvider({Key? key, this.settings, required Widget child})
-      : super(key: key, child: child);
+  const SettingsProvider({super.key, this.settings, required super.child});
 
   @override
   bool updateShouldNotify(covariant SettingsProvider oldWidget) {

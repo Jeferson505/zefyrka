@@ -20,19 +20,19 @@ class DemoScaffold extends StatefulWidget {
   final bool showToolbar;
 
   const DemoScaffold({
-    Key? key,
+    super.key,
     required this.documentFilename,
     required this.builder,
     this.actions,
     this.showToolbar = true,
     this.floatingActionButton,
-  }) : super(key: key);
+  });
 
   @override
-  _DemoScaffoldState createState() => _DemoScaffoldState();
+  DemoScaffoldState createState() => DemoScaffoldState();
 }
 
-class _DemoScaffoldState extends State<DemoScaffold> {
+class DemoScaffoldState extends State<DemoScaffold> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   ZefyrController? _controller;
 
@@ -79,8 +79,7 @@ class _DemoScaffoldState extends State<DemoScaffold> {
 
   Future<void> _loadFromPath(String? assetsPath) async {
     final fs = LocalFileSystem();
-    final file =
-        fs.directory(assetsPath).childFile('${widget.documentFilename}');
+    final file = fs.directory(assetsPath).childFile(widget.documentFilename);
     if (await file.exists()) {
       final data = await file.readAsString();
       final doc = NotusDocument.fromJson(jsonDecode(data));
@@ -102,9 +101,8 @@ class _DemoScaffoldState extends State<DemoScaffold> {
   Future<void> _save() async {
     final settings = Settings.of(context)!;
     final fs = LocalFileSystem();
-    final file = fs
-        .directory(settings.assetsPath)
-        .childFile('${widget.documentFilename}');
+    final file =
+        fs.directory(settings.assetsPath).childFile(widget.documentFilename);
     final data = jsonEncode(_controller!.document);
     await file.writeAsString(data);
     ScaffoldMessenger.of(_scaffoldKey.currentContext!)

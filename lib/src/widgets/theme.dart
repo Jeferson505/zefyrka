@@ -145,7 +145,7 @@ class ZefyrThemeData {
       heading1: TextBlockTheme(
         style: defaultStyle.style.copyWith(
           fontSize: 34.0,
-          color: defaultStyle.style.color!.withOpacity(0.70),
+          color: defaultStyle.style.color!.withValues(alpha: 0.70),
           height: 1.15,
           fontWeight: FontWeight.w300,
         ),
@@ -154,7 +154,7 @@ class ZefyrThemeData {
       heading2: TextBlockTheme(
         style: TextStyle(
           fontSize: 24.0,
-          color: defaultStyle.style.color!.withOpacity(0.70),
+          color: defaultStyle.style.color!.withValues(alpha: 0.70),
           height: 1.15,
           fontWeight: FontWeight.normal,
         ),
@@ -163,7 +163,7 @@ class ZefyrThemeData {
       heading3: TextBlockTheme(
         style: TextStyle(
           fontSize: 20.0,
-          color: defaultStyle.style.color!.withOpacity(0.70),
+          color: defaultStyle.style.color!.withValues(alpha: 0.70),
           height: 1.25,
           fontWeight: FontWeight.w500,
         ),
@@ -175,7 +175,7 @@ class ZefyrThemeData {
         lineSpacing: VerticalSpacing(bottom: 6),
       ),
       quote: TextBlockTheme(
-        style: TextStyle(color: baseStyle.color!.withOpacity(0.6)),
+        style: TextStyle(color: baseStyle.color!.withValues(alpha: 0.6)),
         spacing: baseSpacing,
         lineSpacing: VerticalSpacing(top: 6, bottom: 2),
         decoration: BoxDecoration(
@@ -186,7 +186,7 @@ class ZefyrThemeData {
       ),
       code: TextBlockTheme(
         style: TextStyle(
-          color: Colors.blue.shade900.withOpacity(0.9),
+          color: Colors.blue.shade900.withValues(alpha: 0.9),
           fontFamily: fontFamily,
           fontSize: 13.0,
           height: 1.15,

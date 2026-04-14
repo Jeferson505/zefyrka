@@ -5,15 +5,15 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 class TextFieldScreen extends StatefulWidget {
-  TextFieldScreen({Key? key, this.title}) : super(key: key);
+  const TextFieldScreen({super.key, this.title});
 
   final String? title;
 
   @override
-  _TextFieldScreenState createState() => _TextFieldScreenState();
+  TextFieldScreenState createState() => TextFieldScreenState();
 }
 
-class _TextFieldScreenState extends State<TextFieldScreen> {
+class TextFieldScreenState extends State<TextFieldScreen> {
   late ZefyrController _controller;
   final FocusNode _focusNode = FocusNode();
 

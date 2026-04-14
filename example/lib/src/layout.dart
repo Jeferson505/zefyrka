@@ -16,14 +16,13 @@ class PageLayout extends StatefulWidget {
   final Widget? menuBar;
   final Widget? body;
 
-  const PageLayout({Key? key, this.appBar, this.menuBar, this.body})
-      : super(key: key);
+  const PageLayout({super.key, this.appBar, this.menuBar, this.body});
 
   @override
-  _PageLayoutState createState() => _PageLayoutState();
+  PageLayoutState createState() => PageLayoutState();
 }
 
-class _PageLayoutState extends State<PageLayout> {
+class PageLayoutState extends State<PageLayout> {
   @override
   Widget build(BuildContext context) {
     if (isDisplayDesktop(context) || isDisplaySmallDesktop(context)) {
@@ -43,8 +42,7 @@ class _DesktopScaffold extends StatelessWidget {
   final Widget? menuBar;
   final Widget? body;
 
-  const _DesktopScaffold({Key? key, this.appBar, this.menuBar, this.body})
-      : super(key: key);
+  const _DesktopScaffold({this.appBar, this.menuBar, this.body});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,8 +76,7 @@ class _MobileScaffold extends StatelessWidget {
   final Widget? menuBar;
   final Widget? body;
 
-  const _MobileScaffold({Key? key, this.appBar, this.menuBar, this.body})
-      : super(key: key);
+  const _MobileScaffold({this.appBar, this.menuBar, this.body});
 
   @override
   Widget build(BuildContext context) {

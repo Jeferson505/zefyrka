@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zefyrka/zefyrka.dart';
 
 class ZefyrLogo extends StatelessWidget {
+  const ZefyrLogo({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -20,8 +23,10 @@ class ZefyrLogo extends StatelessWidget {
 }
 
 class FullPageEditorScreen extends StatefulWidget {
+  const FullPageEditorScreen({super.key});
+
   @override
-  _FullPageEditorScreenState createState() => _FullPageEditorScreenState();
+  FullPageEditorScreenState createState() => FullPageEditorScreenState();
 }
 
 final doc =
@@ -31,10 +36,11 @@ final doc =
     r'xibility in mind. It provides clean interface for distraction-free editing. Think Medium.com-like experience.\nMarkdown inspired semantics"},{"insert":"\n","attributes":{"heading":2}},{"insert":"Ever needed to have a heading line inside of a quote block, like this:\nI’m a Markdown heading"},{"insert":"\n","attributes":{"block":"quote","heading":3}},{"insert":"And I’m a regular paragraph"},{"insert":"\n","attributes":{"block":"quote"}},{"insert":"Code blocks"},{"insert":"\n","attributes":{"headin'
     r'g":2}},{"insert":"Of course:\nimport ‘package:flutter/material.dart’;"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"import ‘package:zefyrka/zefyrka.dart’;"},{"insert":"\n\n","attributes":{"block":"code"}},{"insert":"void main() {"},{"insert":"\n","attributes":{"block":"code"}},{"insert":" runApp(MyZefyrApp());"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"}"},{"insert":"\n","attributes":{"block":"code"}},{"insert":"\n\n\n"}]';
 
-enum _Options { darkTheme }
+enum Options { darkTheme }
 
-class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
-  final ZefyrController _controller = ZefyrController(NotusDocument.fromJson(json.decode(doc)));
+class FullPageEditorScreenState extends State<FullPageEditorScreen> {
+  final ZefyrController _controller =
+      ZefyrController(NotusDocument.fromJson(json.decode(doc)));
   final FocusNode _focusNode = FocusNode();
   bool _editing = false;
   late StreamSubscription<NotusChange> _sub;
@@ -44,7 +50,7 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
   void initState() {
     super.initState();
     _sub = _controller.document.changes.listen((change) {
-      print('${change.source}: ${change.change}');
+      log('${change.source}: ${change.change}');
     });
   }
 
@@ -65,7 +71,7 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
         title: ZefyrLogo(),
         actions: [
           done,
-          PopupMenuButton<_Options>(
+          PopupMenuButton<Options>(
             itemBuilder: buildPopupMenu,
             onSelected: handlePopupItemSelected,
           )
@@ -92,21 +98,21 @@ class _FullPageEditorScreenState extends State<FullPageEditorScreen> {
     }
   }
 
-  void handlePopupItemSelected(value) {
+  void handlePopupItemSelected(Options value) {
     if (!mounted) return;
     setState(() {
-      if (value == _Options.darkTheme) {
+      if (value == Options.darkTheme) {
         _darkTheme = !_darkTheme;
       }
     });
   }
 
-  List<PopupMenuEntry<_Options>> buildPopupMenu(BuildContext context) {
+  List<PopupMenuEntry<Options>> buildPopupMenu(BuildContext context) {
     return [
       CheckedPopupMenuItem(
-        value: _Options.darkTheme,
-        child: Text('Dark theme'),
+        value: Options.darkTheme,
         checked: _darkTheme,
+        child: Text('Dark theme'),
       ),
     ];
   }

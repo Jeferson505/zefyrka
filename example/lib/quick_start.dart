@@ -7,6 +7,8 @@ void main() {
 }
 
 class QuickStartApp extends StatelessWidget {
+  const QuickStartApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,6 +22,8 @@ class QuickStartApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final navigator = Navigator.of(context);

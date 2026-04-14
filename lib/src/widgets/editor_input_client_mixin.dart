@@ -38,7 +38,7 @@ mixin RawEditorStateTextInputClientMixin on EditorState
       _textInputConnection != null && _textInputConnection!.attached;
 
   /// Opens or closes input connection based on the current state of
-  /// [focusNode] and [value].
+  /// 'focusNode' and 'value.
   void openOrCloseConnection() {
     if (widget.focusNode.hasFocus && widget.focusNode.consumeKeyboardToken()) {
       openConnectionIfNeeded();
@@ -85,8 +85,8 @@ mixin RawEditorStateTextInputClientMixin on EditorState
     }
   }
 
-  /// Updates remote value based on current state of [document] and
-  /// [selection].
+  /// Updates remote value based on current state of 'document' and
+  /// 'selection'.
   ///
   /// This method may not actually send an update to native side if it thinks
   /// remote value is up to date or identical.

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart' show TapGestureRecognizer;
 import 'package:flutter/rendering.dart';
 import 'package:notus_format/notus_format.dart';
 
@@ -35,11 +36,11 @@ abstract class RenderAbstractEditor {
   /// selection that contains some text but whose ends meet in the middle).
   List<TextSelectionPoint> getEndpointsForSelection(TextSelection selection);
 
-  /// If [ignorePointer] is false (the default) then this method is called by
+  /// If 'ignorePointer' is false (the default) then this method is called by
   /// the internal gesture recognizer's [TapGestureRecognizer.onTapDown]
   /// callback.
   ///
-  /// When [ignorePointer] is true, an ancestor widget must respond to tap
+  /// When 'ignorePointer' is true, an ancestor widget must respond to tap
   /// down events by calling this method.
   void handleTapDown(TapDownDetails details);
 
